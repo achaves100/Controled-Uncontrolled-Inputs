@@ -1,15 +1,35 @@
-//import react into the bundle
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
 
-//include bootstrap npm library into the bundle
-import "bootstrap";
+export function Home() {
+	const [task, setTask] = useState("");
+	const [list, setList] = useState([]);
+	return (
+		<div className="text-center m-5">
+			<h1>TODO LIST</h1>
 
-//include your index.scss file into the bundle
-import "../styles/index.scss";
+			<input
+				type="text"
+				placeholder="ingrese sus tareas"
+				onChange={e => setTask(e.target.value)}
+				value={task}
+				onKeyPress={e => {
+					if (e.key == "Enter") {
+						setList(list.concat(task));
+						setTask("");
+						console.log({ list });
+					}
+				}}
+			/>
 
-//import your own components
-import { Home } from "./component/home.js";
+			{list.map((item, index) => {
+				return <li key={index}>{item}</li>;
+			})}
+		</div>
+	);
+}
 
-//render your react application
-ReactDOM.render(<Home />, document.querySelector("#app"));
+/*  {city.map((item, index) => {
+            return <li key={index}>{item}</li>;
+        })
+} 
+*/
